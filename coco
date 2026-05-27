@@ -1,0 +1,75 @@
+//1
+package clinic.core;
+
+public class Pacjent {
+
+    private String name;
+    private String pesel;
+    private String kodChoroby;
+
+    public Pacjent(String name, String pesel) {
+        this.name = name;
+        this.pesel = pesel;
+        this.kodChoroby = "";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    void setKodChoroby(String code) {
+        this.kodChoroby = code;
+    }
+}
+
+//2
+
+package clinic.core;
+
+public class Doktor {
+
+    public void diagnoza(Pacjent pacjent, String kod) {
+        pacjent.setKodChoroby(kod);
+    }
+}
+
+//3
+
+package clinic.client;
+
+import clinic.core.Pacjent;
+import clinic.core.Doktor;
+
+public class ReceptionApp {
+
+    public static void main(String[] args) {
+
+        Pacjent pacjent = new Pacjent("Jan Kowalski", "12345678901");
+
+        Doktor doktor = new Doktor();
+
+        System.out.println(pacjent.getName());
+
+        // System.out.println(pacjent.pesel);
+        // Błąd kompilacji:
+        // pole pesel jest private i nie można uzyskać do niego dostępu poza klasą Pacjent.
+
+        // pacjent.setKodChoroby("A123");
+        // Błąd kompilacji:
+        // metoda setKodChoroby ma dostęp pakietowy
+        // i nie jest widoczna poza pakietem clinic.core.
+
+        doktor.diagnoza(pacjent, "A123");
+    }
+}
+
+
+// Struktura projektu:
+//
+// src/
+// ├── clinic/
+// │   ├── core/
+// │   │   ├── Pacjent.java
+// │   │   └── Doktor.java
+// │   └── client/
+// │       └── ReceptionApp.java
